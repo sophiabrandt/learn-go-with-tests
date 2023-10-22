@@ -1,0 +1,20 @@
+version: '3'
+
+tasks:
+  tidy:
+    cmds:
+      - go fmt ./...
+      - go mod tidy -v
+
+  test:
+    cmds:
+      - go test -v -race -buildvcs ./...
+
+  test:cov:
+    cmds:
+      - go test -v -race -buildvcs -coverprofile=/tmp/coverage.out ./...
+      - go tool cover -html=/tmp/coverage.out
+
+  lint:
+    cmds:
+      - docker run -t --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.54.2 golangci-lint run -v
