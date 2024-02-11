@@ -12,9 +12,11 @@ func TestNewBlogPosts(t *testing.T) {
 	t.Run("returns blog posts from filesystem", func(t *testing.T) {
 		const (
 			firstBody = `Title: Post 1
-Description: Description 1`
+Description: Description 1
+Tags: tdd, go`
 			secondBody = `Title: Post 2
-Description: Description 2`
+Description: Description 2
+Tags: rust, terminal`
 		)
 		fs := fstest.MapFS{
 			"hello world.md":  {Data: []byte(firstBody)},
@@ -27,7 +29,7 @@ Description: Description 2`
 		}
 
 		got := posts[0]
-		want := blogposts.Post{Title: "Post 1", Description: "Description 1"}
+		want := blogposts.Post{Title: "Post 1", Description: "Description 1", Tags: []string{"tdd", "go"}}
 
 		assertPost(t, got, want)
 	})
